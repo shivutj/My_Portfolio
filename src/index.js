@@ -1,17 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import Icon from './assets/icon.png';
+import './App.css';
+// Lenis disabled for native-speed scrolling
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const container = document.getElementById('root');
+const root = ReactDOM.createRoot(container);
 root.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+// (Optional) Re-enable Lenis here if needed
+
+// Set favicon to assets/icon.png
+(function setFavicon() {
+  try {
+    const head = document.head || document.getElementsByTagName('head')[0];
+    let link = document.querySelector("link[rel='icon']");
+    if (!link) {
+      link = document.createElement('link');
+      link.rel = 'icon';
+      head.appendChild(link);
+    }
+    link.href = Icon;
+  } catch (_) {}
+})();
+

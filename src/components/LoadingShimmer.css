@@ -1,0 +1,28 @@
+.shimmer-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.1));
+  border: 1px solid rgba(255,255,255,0.15);
+  min-height: 120px;
+}
+
+.shimmer-sheen {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg,
+      rgba(255,255,255,0) 0%,
+      rgba(255,255,255,0) 35%,
+      rgba(255,255,255,0.3) 45%,
+      rgba(255,255,255,0) 60%,
+      rgba(255,255,255,0) 100%);
+  transform: translateX(-100%);
+  animation: shimmer-move 1.4s ease-in-out infinite;
+}
+
+@keyframes shimmer-move {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+

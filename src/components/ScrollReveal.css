@@ -1,0 +1,16 @@
+.scroll-reveal {
+  margin: 20px 0;
+}
+
+.scroll-reveal-text {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  font-weight: 500;
+  color: #111;
+}
+
+.word {
+  display: inline-block;
+}
+
+

@@ -1,0 +1,18 @@
+.shuffle-parent {
+  display: inline-block;
+  white-space: normal;
+  word-wrap: break-word;
+  will-change: transform;
+  line-height: 1;
+  font-size: inherit; /* inherit from parent so hero name size controls it */
+  font-family: 'Press Start 2P', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+  visibility: hidden;
+  image-rendering: pixelated;
+}
+
+.shuffle-parent.is-ready { visibility: visible; }
+
+.shuffle-char-wrapper { display: inline-block; overflow: hidden; vertical-align: baseline; position: relative; }
+.shuffle-char-strip { display: inline-block; white-space: nowrap; will-change: transform; }
+.shuffle-char { line-height: 1; display: inline-block; text-align: center; }
