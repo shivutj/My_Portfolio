@@ -10,7 +10,12 @@ body {
     Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
   color: #eee;
   scroll-behavior: auto; /* Lenis handles smooth */
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden; /* prevent sideways scroll on small devices */
 }
+
+/* Layout safety + sizing */
+*, *::before, *::after { box-sizing: border-box; }
 
 .app-root {
   min-height: 100vh;
@@ -110,6 +115,13 @@ body {
   backdrop-filter: blur(8px);
   box-shadow: 0 8px 24px rgba(0,0,0,0.32);
   font-weight: 700;
+}
+
+.hero-resume {
+  right: auto;
+  left: 16px;
+  background: rgba(34,197,94,0.25);
+  border-color: rgba(34,197,94,0.45);
 }
 
 .open-card {
@@ -227,6 +239,7 @@ body {
   transition: color 200ms ease, transform 200ms ease;
   white-space: nowrap; /* prevent text wrapping */
   text-align: center;
+  min-width: 0; /* allow shrink inside grid */
 }
 .capsule-item:hover {
   transform: translateY(-1px);
@@ -347,6 +360,7 @@ body {
   line-height: 1.6;
   color: #111;
   font-size: 1rem;
+  text-align: justify;
 }
 
 .section ul {
@@ -428,6 +442,7 @@ body {
 
 .bottom-nav.show {
   transform: translateX(-50%) translateY(0);
+  bottom: max(12px, env(safe-area-inset-bottom));
   pointer-events: auto;
 }
 
@@ -482,6 +497,10 @@ body {
   padding: 24px;
   margin: 16px 0;
   border: 1px solid rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .info-card h3 {
@@ -499,6 +518,10 @@ body {
   background: rgba(255, 255, 255, 0.6);
   border-radius: 12px;
   border: 1px solid rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .info-item:last-child {
@@ -525,6 +548,8 @@ body {
   border-radius: 20px;
   font-size: 0.9rem;
   font-weight: 500;
+  display: inline-block;
+  white-space: nowrap; /* keep in one line */
 }
 
 .info-details {
@@ -560,6 +585,8 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 16px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .skill-item {
@@ -570,6 +597,9 @@ body {
   background: rgba(255, 255, 255, 0.6);
   border-radius: 8px;
   border: 1px solid rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .skill-label {
@@ -604,6 +634,7 @@ body {
   word-wrap: break-word;
   overflow-wrap: break-word;
   margin: 0; /* remove any default margins */
+  overflow: hidden;
 }
 
 .project-card:hover {
@@ -645,6 +676,7 @@ body {
   margin: 0;
   color: #666;
   line-height: 1.6;
+  text-align: justify;
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
@@ -693,6 +725,24 @@ body {
   font-style: italic;
 }
 
+.resume-bottom {
+  margin-top: 16px;
+}
+
+.resume-btn {
+  display: inline-block;
+  padding: 12px 16px;
+  border-radius: 9999px;
+  background: rgba(34,197,94,0.18);
+  color: #065f46;
+  border: 1px solid rgba(34,197,94,0.45);
+  text-decoration: none;
+  font-weight: 700;
+  backdrop-filter: blur(6px);
+}
+
+.resume-btn:hover { background: rgba(34,197,94,0.22); }
+
 /* Certification item */
 .cert-item {
   display: flex;
@@ -726,4 +776,91 @@ body {
   font-weight: 500;
 }
 
+
+/* ======================== */
+/* Mobile responsiveness    */
+/* ======================== */
+@media (max-width: 600px) {
+  .app-root { padding: 16px; }
+
+  .hero { height: 55vh; border-radius: 16px; }
+  .hero-link { top: 10px; right: 10px; padding: 8px 12px; font-weight: 600; }
+  .hero-resume { left: 10px; right: auto; }
+  .open-card { top: 10px; left: 10px; padding: 10px 12px; gap: 8px; }
+  .open-dot { width: 10px; height: 10px; }
+  .open-text { font-size: 0.95rem; }
+
+  /* Make hero name scale down on small screens */
+  .hero-name {
+    font-size: clamp(1.8rem, 9vw, 3.2rem);
+    gap: 8px;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    letter-spacing: 0.5px;
+  }
+  .hero-name * { white-space: nowrap; }
+  .hero-overlay { padding: 0 12px; }
+
+  .combined-content {
+    max-width: 100%;
+    width: 100%;
+    padding: 16px;
+    border-radius: 16px;
+    margin: 0;
+  }
+
+  .content-section { margin-bottom: 28px; }
+  .heading { font-size: 1.4rem; }
+  .section h3 { font-size: 1.05rem; }
+  .section p, .section li { font-size: 0.95rem; }
+
+  .projects-grid { gap: 14px; }
+  .project-card { padding: 16px; }
+  .project-card h3 { font-size: 1rem; }
+
+  .info-card { padding: 14px; margin: 12px 0; border-radius: 14px; }
+  .info-item { padding: 12px; border-radius: 10px; }
+  .info-header { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .info-header { width: 100%; }
+  .info-date { align-self: flex-start; margin-top: 2px; }
+  .info-details { justify-content: flex-start; gap: 6px; }
+  .info-institution, .info-description { font-size: 0.9rem; }
+  .info-title { font-size: 1rem; }
+  .info-date, .info-gpa { font-size: 0.85rem; padding: 4px 10px; }
+
+  .skills-grid { grid-template-columns: 1fr; }
+  .skill-item { flex-direction: column; align-items: flex-start; gap: 6px; width: 100%; }
+
+  /* Bottom floating nav tweaks */
+  .bottom-nav { bottom: 12px; }
+  .capsule-nav {
+    gap: 0;
+    padding: 2px;
+    width: calc(100vw - 24px);
+    max-width: 520px;
+    justify-items: center;
+  }
+  .capsule-item { padding: 8px 8px; font-size: 0.82rem; letter-spacing: 0; }
+  .capsule-indicator { top: 2px; bottom: 2px; border-width: 1px; }
+
+  /* Space so bottom nav doesn't cover content */
+  .outer { padding-bottom: 120px; }
+}
+
+/* Ultra-small devices */
+@media (max-width: 340px) {
+  .hero-name { font-size: clamp(1.6rem, 8.5vw, 2.8rem); }
+  .heading { font-size: 1.25rem; }
+  .section p, .section li { font-size: 0.9rem; }
+}
+
+/* Tablet adjustments */
+@media (max-width: 900px) {
+  .combined-content { max-width: 720px; padding: 22px; }
+  .heading { font-size: 1.6rem; }
+  .project-card h3 { font-size: 1.05rem; }
+}
+
+/* Prevent long links from breaking layout */
+a { word-break: break-word; overflow-wrap: anywhere; }
 

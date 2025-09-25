@@ -16,6 +16,7 @@ const App = () => {
   const [activeTab, setActiveTab] = useState('About');
   const [showBottomNav, setShowBottomNav] = useState(false);
   const [heroProgress, setHeroProgress] = useState(0); // 0 visible, 1 hidden
+  const [isMobileHero, setIsMobileHero] = useState(false);
   const headerRef = useRef(null);
   const heroRef = useRef(null);
   const programmaticScrollRef = useRef(false);
@@ -53,6 +54,17 @@ const App = () => {
     const interval = setInterval(updateTime, 1000);
     
     return () => clearInterval(interval);
+  }, []);
+
+  // Detect very small screens to render a simpler hero title (avoids char-shuffle artifacts)
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 400px)');
+    const apply = () => setIsMobileHero(mq.matches);
+    apply();
+    mq.addEventListener ? mq.addEventListener('change', apply) : mq.addListener(apply);
+    return () => {
+      mq.removeEventListener ? mq.removeEventListener('change', apply) : mq.removeListener(apply);
+    };
   }, []);
 
   // Reveal-on-scroll for elements with .reveal class
@@ -206,6 +218,7 @@ const App = () => {
             </div>
             <div className="info-details">
               <span className="info-description">4-week front-end internship using HTML, CSS, JavaScript</span>
+              <a href="https://drive.google.com/file/d/1sBtM6lV4aYpHqFVInL8cByA-YR9vsrhp/view?usp=drivesdk" target="_blank" rel="noreferrer">Certificate</a>
             </div>
           </div>
           <div className="info-item">
@@ -215,6 +228,7 @@ const App = () => {
             </div>
             <div className="info-details">
               <span className="info-description">Worked on full-stack MERN-based modules</span>
+              <a href="https://drive.google.com/file/d/1sF9TL1EkiyEakm4FjS4rFPS2cxboY-zU/view?usp=drivesdk" target="_blank" rel="noreferrer">Certificate</a>
             </div>
           </div>
         </div>
@@ -239,6 +253,7 @@ const App = () => {
             <span className="cert-title">Programming in Java</span>
             <span className="cert-org">NPTEL</span>
             <span className="cert-date">Mar 2025</span>
+            <a href="https://drive.google.com/file/d/18wt4di_a_MRJRWXVmpNVNcyDXSwZf8PM/view?usp=drivesdk" target="_blank" rel="noreferrer">View Certificate</a>
           </div>
         </div>
       </section>
@@ -270,6 +285,20 @@ const App = () => {
               <span className="project-year">2025</span>
             </div>
             <p>AI system identifying 30 Ayurvedic plants via leaf image. Compared CNN models (MobileNetV2, DenseNet121, Xception, EfficientNetB0, InceptionV3); Streamlit app with multilingual results and symptom-based remedy suggestions.</p>
+          </div>
+        </div>
+        {/* Research Publications */}
+        <div className="info-card" style={{ marginTop: 24 }}>
+          <h3>Research Publications</h3>
+          <div className="info-item">
+            <div className="info-header">
+              <span className="info-title">Deep Learning-Based Identification and Classification of Ayurvedic Medicinal Plants</span>
+              <span className="info-date">Sep 2025</span>
+            </div>
+            <div className="info-details">
+              <span className="info-description">Presented at the Fifth International Conference on Emerging Research in Electronics, Computer Science and Technology (ICERECT – 2025), organized by P.E.S. College of Engineering, Mandya, and IEEE Bangalore Section.</span>
+              <a href="https://drive.google.com/file/d/1gmflDdh40KSlzepotP8UOxEsyA0QvQhF/view" target="_blank" rel="noreferrer">Publication Certificate</a>
+            </div>
           </div>
         </div>
       </section>
@@ -309,6 +338,16 @@ const App = () => {
               </p>
               <p className="last-updated">Last updated: {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
             </div>
+            <div className="resume-bottom">
+              <a
+                className="resume-btn"
+                href="https://drive.google.com/file/d/1cgoIRqd_tG99l3hPBZPp5QKB1A6Zm5Cl/view?usp=drivesdk"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Download Resume
+              </a>
+            </div>
         </div>
       </section>
     </div>
@@ -338,27 +377,32 @@ const App = () => {
       {/* Hero with Dither and name */}
       <section className="hero" aria-label="Intro" ref={heroRef}>
         <Dither waveColor={[0.35, 0.35, 0.35]} enableMouseInteraction={true} disableAnimation={false} colorNum={4} />
+        <a className="hero-link hero-resume" href="https://drive.google.com/file/d/1cgoIRqd_tG99l3hPBZPp5QKB1A6Zm5Cl/view?usp=drivesdk" target="_blank" rel="noreferrer">Resume</a>
         <a className="hero-link" href="https://linkedin.com/in/shivutj" target="_blank" rel="noreferrer">LinkedIn</a>
         <div className="hero-overlay">
           <div
             className="hero-name"
             style={{ opacity: Math.max(0, 1 - heroProgress), transform: `translateY(${heroProgress * -24}px) scale(${1 - heroProgress * 0.05})` }}
           >
-            <Shuffle
-              text="SHIVU T J"
-              shuffleDirection="right"
-              duration={0.35}
-              animationMode="evenodd"
-              shuffleTimes={1}
-              ease="power3.out"
-              stagger={0.03}
-              threshold={0.1}
-              triggerOnce={true}
-              triggerOnHover={true}
-              respectReducedMotion={true}
-              className=""
-              style={{ display: 'inline-block' }}
-            />
+            {isMobileHero ? (
+              <span style={{ display: 'inline-block' }}>SHIVU&nbsp;T&nbsp;J</span>
+            ) : (
+              <Shuffle
+                text={"SHIVU\u00A0T\u00A0J"}
+                shuffleDirection="right"
+                duration={0.35}
+                animationMode="evenodd"
+                shuffleTimes={1}
+                ease="power3.out"
+                stagger={0.03}
+                threshold={0.1}
+                triggerOnce={true}
+                triggerOnHover={true}
+                respectReducedMotion={true}
+                className=""
+                style={{ display: 'inline-block' }}
+              />
+            )}
           </div>
           <div className="open-card" aria-label="availability">
             <span className="open-dot" />
